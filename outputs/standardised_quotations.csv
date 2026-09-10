@@ -1,0 +1,4 @@
+vendor_name,quote_ref,currency,quantity,unit_price,shipping_cost,warranty_years_included,warranty_type,effective_warranty_years,warranty_extension_per_unit,delivery_days_calendar,payment_terms_days,prepayment_pct,validity_days,iso27001,ram_gb,storage_gb,screen_inches,os,fx_rate_to_usd,total_cost_usd,unit_cost_usd_all_in
+TechSource Solutions Inc.,TS-Q-88231,USD,40,1285.0,450.0,3,onsite,3,0.0,14,30,0,30,yes,16,512,14,Windows 11 Pro,1.0,51850.0,1296.25
+Alpine IT Supplies GmbH,AL-2026-4471,EUR,40,1190.0,0.0,2,carry-in,3,85.0,28,45,0,30,in progress,16,512,14,Windows 11 Pro,1.08,55080.0,1377.0
+Megabyte Distribution LLC,MB-77012,USD,40,1372.5,0.0,3,depot,3,0.0,14,0,50,14,yes,16,1024,14,Windows 11 Pro,1.0,54900.0,1372.5

@@ -1,0 +1,32 @@
+{
+  "_note": "Fictional performance history from the last 24 months of purchase orders. Used as the 'Past performance' criterion. A vendor with no history receives a neutral score and a reference-check flag.",
+  "period": "2024-09 to 2026-08",
+  "vendors": {
+    "TechSource Solutions Inc.": {
+      "orders_completed": 6,
+      "total_spend_usd": 148200,
+      "on_time_delivery_pct": 95,
+      "defect_rate_pct": 1.2,
+      "invoice_accuracy_pct": 100,
+      "avg_support_response_hours": 4,
+      "open_disputes": 0,
+      "last_order": "2026-05-14",
+      "notes": "Reliable on hardware refreshes; one late delivery in 2025 due to freight strike."
+    },
+    "Alpine IT Supplies GmbH": {
+      "orders_completed": 2,
+      "total_spend_usd": 21600,
+      "on_time_delivery_pct": 80,
+      "defect_rate_pct": 2.5,
+      "invoice_accuracy_pct": 90,
+      "avg_support_response_hours": 24,
+      "open_disputes": 0,
+      "last_order": "2025-11-03",
+      "notes": "Small orders only; one invoice needed re-issue due to wrong currency."
+    },
+    "Megabyte Distribution LLC": {
+      "orders_completed": 0,
+      "notes": "New vendor. No performance history with Bramwell & Co."
+    }
+  }
+}

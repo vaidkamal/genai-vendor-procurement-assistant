@@ -1,0 +1,19 @@
+{
+  "request_id": "PR-2026-0917",
+  "exported": "2026-09-10T16:23:00Z",
+  "history": [
+    {
+      "time": "2026-09-10 16:23",
+      "officer": "Priya Raman",
+      "decision": "Approved recommendation",
+      "vendor": "TechSource Solutions Inc.",
+      "weights": {"cost": 30, "technical_fit": 15, "delivery": 15, "warranty_support": 15, "commercial_compliance": 15, "past_performance": 10},
+      "justification": "Lowest cost, only fully compliant bidder, delivery inside onboarding window. Negotiate Net 45 before PO.",
+      "snapshot": [
+        {"vendor": "TechSource Solutions Inc.", "score": 97.31},
+        {"vendor": "Alpine IT Supplies GmbH", "score": 85.08},
+        {"vendor": "Megabyte Distribution LLC", "score": 82.32}
+      ]
+    }
+  ]
+}

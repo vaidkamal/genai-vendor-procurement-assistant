@@ -1,0 +1,98 @@
+{
+  "vendor": "Megabyte Distribution LLC",
+  "quote_ref": "MB-77012",
+  "call_date": "2026-09-10",
+  "agent": "AI voice agent (disclosed at start of call)",
+  "vendor_contact": "Rohan, MegaByte sales (fictional)",
+  "flags_discussed": [
+    "P-03 Payment terms",
+    "P-06 Quote validity",
+    "P-08 Vendor history"
+  ],
+  "outcomes": [
+    {
+      "topic": "Payment terms",
+      "vendor_position": "30% deposit + balance on delivery, or Net 30 subject to credit check",
+      "policy_effect": "Either option satisfies P-03 (\u226430% advance)"
+    },
+    {
+      "topic": "Quote validity",
+      "vendor_position": "Extended to 30 days",
+      "policy_effect": "Satisfies P-06 once the revised quote arrives"
+    },
+    {
+      "topic": "Warranty",
+      "vendor_position": "Onsite NBD available at USD 105 per unit over 3 years (+USD 4,200 total)",
+      "policy_effect": "Optional; would raise total to USD 59,100, still within budget"
+    },
+    {
+      "topic": "Delivery",
+      "vendor_position": "10 business days from deposit, unchanged",
+      "policy_effect": "No change"
+    }
+  ],
+  "commitments_made_by_agent": "None. The agent stated three times that it cannot accept, order or pay.",
+  "next_action_for_human": "Await revised written quote, then re-run 01_parse and 02_compare; procurement officer decides in the dashboard.",
+  "turns": [
+    {
+      "speaker": "Agent",
+      "text": "Good morning. This is Bramwell and Company's procurement assistant. I am an AI voice agent calling on behalf of the procurement team about your quotation M B 7 7 0 1 2 for forty laptops. This call is recorded and transcribed for our procurement file. Is now a good time?"
+    },
+    {
+      "speaker": "Vendor",
+      "text": "Sure, go ahead. This is Rohan from MegaByte sales."
+    },
+    {
+      "speaker": "Agent",
+      "text": "Thank you, Rohan. Before we start, please note that I cannot accept an offer, place an order, or commit any payment. Only our procurement officer can do that. I am gathering clarifications so that they can make a decision. Is that clear?"
+    },
+    {
+      "speaker": "Vendor",
+      "text": "Understood."
+    },
+    {
+      "speaker": "Agent",
+      "text": "First point. Your quote asks for a fifty percent deposit with the order. Our procurement policy limits advance payments to thirty percent. Would MegaByte be able to offer net thirty terms, or a deposit of no more than thirty percent with the balance on delivery?"
+    },
+    {
+      "speaker": "Vendor",
+      "text": "We can do thirty percent up front and the balance on delivery for an order of this size. Net thirty is possible but only with a credit check, since you are a new customer for us."
+    },
+    {
+      "speaker": "Agent",
+      "text": "Thank you. I have noted two options: thirty percent deposit with balance on delivery, or net thirty subject to a credit check. Second point. The quote is valid for fourteen days, but our approval cycle needs at least twenty one days. Can you extend the validity to thirty days?"
+    },
+    {
+      "speaker": "Vendor",
+      "text": "Yes, thirty days is fine. I will send a revised quote today."
+    },
+    {
+      "speaker": "Agent",
+      "text": "Noted. Third point. The warranty is described as a three year depot service with a seven to ten day turnaround. Is an onsite, next business day option available, and what would it cost per unit?"
+    },
+    {
+      "speaker": "Vendor",
+      "text": "We can add onsite next business day for thirty five dollars per unit per year, so one hundred and five dollars per unit over three years."
+    },
+    {
+      "speaker": "Agent",
+      "text": "Thank you. To confirm, that would be an additional four thousand two hundred dollars for forty units. I have recorded that as an option; I am not accepting it. Last question. Your delivery is ten business days after the deposit is received. If the deposit is thirty percent, does that timeline stay the same?"
+    },
+    {
+      "speaker": "Vendor",
+      "text": "Yes, ten business days from the deposit, unchanged."
+    },
+    {
+      "speaker": "Agent",
+      "text": "That covers everything. Here is my summary. One, a thirty percent deposit or net thirty with credit check. Two, validity extended to thirty days. Three, an optional onsite warranty at one hundred and five dollars per unit. Four, delivery unchanged. Please confirm all of this in a revised written quotation to procurement at Bramwell, quoting reference P R 2026 0917. Our procurement officer will review it and contact you with a decision. Nothing on this call is a commitment to purchase. Is there anything you would like to add?"
+    },
+    {
+      "speaker": "Vendor",
+      "text": "No, that is all. I will send the revised quote this afternoon."
+    },
+    {
+      "speaker": "Agent",
+      "text": "Thank you, Rohan. Goodbye."
+    }
+  ]
+}

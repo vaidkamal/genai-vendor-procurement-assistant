@@ -1,0 +1,19 @@
+name English (India, custom)
+language en-in
+language en 3
+gender male
+phonemes en-us
+
+// Indian English features approximated with phoneme substitutions:
+// dental stops for th, monophthong face/goat vowels, rhotic, flatter pitch range
+replace 00 T t
+replace 00 D d
+replace 00 eI e@
+replace 00 oU O@
+replace 00 3: @r
+replace 00 a# a
+
+pitch 78 130
+intonation 3
+stressAdd 10 10 0 0 0 0 10 10
+flutter 3

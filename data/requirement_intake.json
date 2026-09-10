@@ -1,0 +1,21 @@
+{
+  "request_id": "PR-2026-0917",
+  "requester": "IT Operations, Bramwell & Co. Consulting (fictional)",
+  "purchasing_category": "Business laptops for new-hire onboarding",
+  "quantity": 40,
+  "currency": "USD",
+  "budget_cap_usd": 60000,
+  "needed_by_days": 21,
+  "mandatory_specs": {
+    "ram_gb": 16,
+    "storage_gb": 512,
+    "screen_inches": 14,
+    "os": "Windows 11 Pro"
+  },
+  "min_warranty_years": 3,
+  "preferred_warranty_type": "onsite",
+  "max_prepayment_pct": 30,
+  "min_quote_validity_days": 21,
+  "requires_iso27001": true,
+  "notes": "Vendor will image devices with our corporate build before shipping, so information-security certification is required."
+}

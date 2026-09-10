@@ -1,0 +1,267 @@
+{
+  "generated_on": "2026-09-10",
+  "request_id": "PR-2026-0917",
+  "purchasing_category": "Business laptops for new-hire onboarding",
+  "quantity": 40,
+  "budget_cap_usd": 60000,
+  "weights": {
+    "cost": 30,
+    "technical_fit": 15,
+    "delivery": 15,
+    "warranty_support": 15,
+    "commercial_compliance": 15,
+    "past_performance": 10
+  },
+  "criteria_labels": {
+    "cost": "Total cost (USD, all-in)",
+    "technical_fit": "Technical fit vs. mandatory specs",
+    "delivery": "Delivery lead time",
+    "warranty_support": "Warranty and support",
+    "commercial_compliance": "Commercial terms and compliance",
+    "past_performance": "Past performance (24 months)"
+  },
+  "vendors": [
+    {
+      "vendor_name": "TechSource Solutions Inc.",
+      "quote_ref": "TS-Q-88231",
+      "total_cost_usd": 51850.0,
+      "unit_cost_usd_all_in": 1296.25,
+      "delivery_days_calendar": 14,
+      "warranty": "3-year onsite",
+      "payment": "Net 30",
+      "iso27001": "yes",
+      "spec_checks": {
+        "ram_gb": true,
+        "storage_gb": true,
+        "screen_inches": true,
+        "os": true
+      },
+      "performance": {
+        "history": "yes",
+        "orders_completed": 6,
+        "on_time_delivery_pct": 95,
+        "defect_rate_pct": 1.2,
+        "invoice_accuracy_pct": 100,
+        "avg_support_response_hours": 4,
+        "last_order": "2026-05-14"
+      },
+      "scores": {
+        "cost": 100.0,
+        "technical_fit": 90.0,
+        "delivery": 100.0,
+        "warranty_support": 100.0,
+        "commercial_compliance": 95.0,
+        "past_performance": 95.6
+      },
+      "weighted_score": 97.31,
+      "policy_checks": [
+        {
+          "rule": "P-01 Three quotations",
+          "status": "pass",
+          "detail": "3 quotations received"
+        },
+        {
+          "rule": "P-02 Budget",
+          "status": "pass",
+          "detail": "USD 51,850 is within the USD 60,000 cap"
+        },
+        {
+          "rule": "P-03 Payment terms",
+          "status": "pass",
+          "detail": "Net 30 days, 0% advance"
+        },
+        {
+          "rule": "P-04 Warranty",
+          "status": "pass",
+          "detail": "3-year onsite warranty"
+        },
+        {
+          "rule": "P-05 Information security",
+          "status": "pass",
+          "detail": "ISO 27001 certified"
+        },
+        {
+          "rule": "P-06 Quote validity",
+          "status": "pass",
+          "detail": "Valid 30 days"
+        },
+        {
+          "rule": "P-08 Vendor history",
+          "status": "pass",
+          "detail": "6 orders, 95% on time, 1.2% defects"
+        }
+      ],
+      "policy_status": "pass",
+      "extras": [
+        "2% early-payment discount (10 days)"
+      ],
+      "rank": 1
+    },
+    {
+      "vendor_name": "Alpine IT Supplies GmbH",
+      "quote_ref": "AL-2026-4471",
+      "total_cost_usd": 55080.0,
+      "unit_cost_usd_all_in": 1377.0,
+      "delivery_days_calendar": 28,
+      "warranty": "3-year carry-in",
+      "payment": "Net 45",
+      "iso27001": "in progress",
+      "spec_checks": {
+        "ram_gb": true,
+        "storage_gb": true,
+        "screen_inches": true,
+        "os": true
+      },
+      "performance": {
+        "history": "yes",
+        "orders_completed": 2,
+        "on_time_delivery_pct": 80,
+        "defect_rate_pct": 2.5,
+        "invoice_accuracy_pct": 90,
+        "avg_support_response_hours": 24,
+        "last_order": "2025-11-03"
+      },
+      "scores": {
+        "cost": 94.1,
+        "technical_fit": 90.0,
+        "delivery": 65,
+        "warranty_support": 80.0,
+        "commercial_compliance": 90.0,
+        "past_performance": 81.0
+      },
+      "weighted_score": 85.08,
+      "policy_checks": [
+        {
+          "rule": "P-01 Three quotations",
+          "status": "pass",
+          "detail": "3 quotations received"
+        },
+        {
+          "rule": "P-02 Budget",
+          "status": "pass",
+          "detail": "USD 55,080 is within the USD 60,000 cap"
+        },
+        {
+          "rule": "P-03 Payment terms",
+          "status": "pass",
+          "detail": "Net 45 days, 0% advance"
+        },
+        {
+          "rule": "P-04 Warranty",
+          "status": "pass",
+          "detail": "3-year carry-in warranty (only with the paid extension, already included in cost)"
+        },
+        {
+          "rule": "P-05 Information security",
+          "status": "flag",
+          "detail": "ISO 27001 not yet certified - CISO must accept an equivalent or the vendor must not image devices"
+        },
+        {
+          "rule": "P-06 Quote validity",
+          "status": "pass",
+          "detail": "Valid 30 days"
+        },
+        {
+          "rule": "P-08 Vendor history",
+          "status": "pass",
+          "detail": "2 orders, 80% on time, 2.5% defects"
+        }
+      ],
+      "policy_status": "flag",
+      "extras": [
+        "Free asset tagging"
+      ],
+      "rank": 2
+    },
+    {
+      "vendor_name": "Megabyte Distribution LLC",
+      "quote_ref": "MB-77012",
+      "total_cost_usd": 54900.0,
+      "unit_cost_usd_all_in": 1372.5,
+      "delivery_days_calendar": 14,
+      "warranty": "3-year depot",
+      "payment": "50% deposit, balance on delivery",
+      "iso27001": "yes",
+      "spec_checks": {
+        "ram_gb": true,
+        "storage_gb": true,
+        "screen_inches": true,
+        "os": true
+      },
+      "performance": {
+        "history": "none",
+        "orders": 0
+      },
+      "scores": {
+        "cost": 94.4,
+        "technical_fit": 100.0,
+        "delivery": 100.0,
+        "warranty_support": 85.0,
+        "commercial_compliance": 35.0,
+        "past_performance": 60.0
+      },
+      "weighted_score": 82.32,
+      "policy_checks": [
+        {
+          "rule": "P-01 Three quotations",
+          "status": "pass",
+          "detail": "3 quotations received"
+        },
+        {
+          "rule": "P-02 Budget",
+          "status": "pass",
+          "detail": "USD 54,900 is within the USD 60,000 cap"
+        },
+        {
+          "rule": "P-03 Payment terms",
+          "status": "flag",
+          "detail": "50% advance payment exceeds the 30% limit - Finance Director approval needed"
+        },
+        {
+          "rule": "P-04 Warranty",
+          "status": "pass",
+          "detail": "3-year depot warranty"
+        },
+        {
+          "rule": "P-05 Information security",
+          "status": "pass",
+          "detail": "ISO 27001 certified"
+        },
+        {
+          "rule": "P-06 Quote validity",
+          "status": "flag",
+          "detail": "Only 14 days - ask vendor to extend to 21+"
+        },
+        {
+          "rule": "P-08 Vendor history",
+          "status": "flag",
+          "detail": "New vendor with no order history - two trade references and a credit check required before award"
+        }
+      ],
+      "policy_status": "flag",
+      "extras": [
+        "Bundle price split evenly across seats",
+        "3% volume discount at 50+ seats"
+      ],
+      "rank": 3
+    }
+  ],
+  "recommendation": {
+    "vendor_name": "TechSource Solutions Inc.",
+    "weighted_score": 97.31,
+    "margin_over_runner_up": 12.23,
+    "runner_up": "Alpine IT Supplies GmbH",
+    "conditions": [],
+    "requires_human_approval": true,
+    "key_reasons": [
+      "Lowest all-in cost: USD 51,850, USD 3,050 below the next vendor",
+      "Delivers in 14 days, inside the required window",
+      "Strongest support offer: 3-year onsite",
+      "Passes every procurement policy check with no exceptions needed"
+    ]
+  },
+  "human_review": {
+    "status": "pending",
+    "note": "System output is a proposal only. A named procurement officer must approve, change, or reject it (policy P-07)."
+  }
+}

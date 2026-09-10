@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Procurement Review Console — __REQUEST_ID__</title>
+<style>
+  :root{
+    --paper:#F3F5F7; --card:#FFFFFF; --ink:#1B2430; --muted:#5B6674; --line:#D9DEE5;
+    --seal:#1F3A5F; --seal-soft:#E8EFF7; --ok:#2E7D5B; --ok-soft:#E4F2EB;
+    --warn:#B7791F; --warn-soft:#FBF1DC; --bad:#B23A3A; --bad-soft:#F7E3E3;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.5 "Segoe UI",system-ui,-apple-system,Helvetica,Arial,sans-serif;font-variant-numeric:tabular-nums}
+  a{color:var(--seal)}
+  .wrap{max-width:1180px;margin:0 auto;padding:28px 24px 60px}
+  header{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:22px}
+  h1{font-size:26px;line-height:1.2;margin:0 0 6px;font-weight:650}
+  header p{margin:0;color:var(--muted)}
+  .pill{display:inline-block;padding:5px 12px;border-radius:999px;font-size:13px;font-weight:600;border:1px solid transparent}
+  .pill.pending{background:var(--warn-soft);color:var(--warn);border-color:#EAD3A2}
+  .pill.done{background:var(--ok-soft);color:var(--ok);border-color:#BFE0CE}
+  .pill.pass{background:var(--ok-soft);color:var(--ok)} .pill.flag{background:var(--warn-soft);color:var(--warn)} .pill.fail{background:var(--bad-soft);color:var(--bad)}
+  .grid{display:grid;grid-template-columns:300px 1fr;gap:22px}
+  @media(max-width:900px){.grid{grid-template-columns:1fr}}
+  section.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px 22px}
+  section.card h2{font-size:17px;margin:0 0 14px;font-weight:650}
+  section.card h2 small{font-weight:400;color:var(--muted);font-size:13px;margin-left:8px}
+  .stack{display:flex;flex-direction:column;gap:22px}
+  /* weights */
+  .w{margin-bottom:14px}
+  .w label{display:flex;justify-content:space-between;font-size:14px;margin-bottom:4px}
+  .w label b{font-weight:600;color:var(--seal)}
+  .w input[type=range]{width:100%;accent-color:var(--seal)}
+  .w .why{font-size:12px;color:var(--muted);margin-top:2px}
+  .btn{background:var(--seal);color:#fff;border:0;border-radius:7px;padding:9px 16px;font-size:14px;font-weight:600;cursor:pointer}
+  .btn.ghost{background:transparent;color:var(--seal);border:1px solid var(--seal)}
+  .btn:disabled{opacity:.45;cursor:not-allowed}
+  .btn:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #9DB8DA;outline-offset:2px}
+  /* ranking */
+  .rank{display:grid;gap:12px}
+  .vendor{display:grid;grid-template-columns:34px 1fr auto;gap:14px;align-items:center;padding:14px 16px;border:1px solid var(--line);border-radius:9px;transition:background .25s,border-color .25s}
+  .vendor.top{background:var(--seal-soft);border-color:#B9CCE3}
+  .vendor .n{font-size:22px;font-weight:700;color:var(--seal);text-align:center}
+  .vendor .name{font-weight:650}
+  .vendor .meta{font-size:13px;color:var(--muted)}
+  .vendor .score{font-size:26px;font-weight:700;text-align:right;line-height:1}
+  .vendor .score small{display:block;font-size:11px;color:var(--muted);font-weight:500;margin-top:3px}
+  .bar{grid-column:1/-1;height:8px;border-radius:4px;background:#E6EAEF;overflow:hidden}
+  .bar i{display:block;height:100%;background:var(--seal);border-radius:4px;transition:width .35s ease}
+  .vendor.excluded{opacity:.6}
+  /* table */
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th,td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  th{color:var(--muted);font-weight:600;font-size:13px}
+  td.num,th.num{text-align:right}
+  td.best{color:var(--ok);font-weight:650}
+  .checks{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+  .check h3{font-size:15px;margin:0 0 8px;display:flex;justify-content:space-between;align-items:center}
+  .check ul{list-style:none;margin:0;padding:0;font-size:13.5px}
+  .check li{padding:5px 0 5px 24px;position:relative;border-bottom:1px dashed var(--line)}
+  .check li::before{content:"";position:absolute;left:4px;top:11px;width:10px;height:10px;border-radius:50%}
+  .check li.pass::before{background:var(--ok)} .check li.flag::before{background:var(--warn)} .check li.fail::before{background:var(--bad)}
+  .check li span{color:var(--muted)}
+  /* decision */
+  .dec{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:700px){.dec{grid-template-columns:1fr}}
+  .dec label{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
+  .dec input,.dec select,.dec textarea{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:7px;font:inherit;background:#fff}
+  .dec textarea{min-height:88px;resize:vertical}
+  .dec .full{grid-column:1/-1}
+  .note{font-size:13px;color:var(--muted)}
+  .note.err{color:var(--bad)}
+  .history td{font-size:13px}
+  .empty{color:var(--muted);font-size:14px;padding:8px 0}
+  /* ai */
+  .ai{border-left:4px solid var(--seal);padding:2px 0 2px 14px;font-size:14px}
+  .ai h3{margin:0 0 6px;font-size:15px}
+  .ai p{margin:6px 0}
+  .ai ul{margin:6px 0 6px 18px;padding:0}
+  .ask{display:flex;gap:8px;margin-top:14px}
+  .ask input{flex:1;padding:9px 10px;border:1px solid var(--line);border-radius:7px;font:inherit}
+  .answer{margin-top:12px;background:var(--seal-soft);border-radius:8px;padding:12px 14px;font-size:14px;white-space:pre-wrap}
+  .answer:empty{display:none}
+  .guard{background:var(--bad-soft);border:1px solid #E9C4C4;color:#7A2E2E;border-radius:9px;padding:10px 14px;font-size:13.5px;margin:-6px 0 20px}
+  .call{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:800px){.call{grid-template-columns:1fr}}
+  .turns{max-height:340px;overflow:auto;border:1px solid var(--line);border-radius:8px;padding:6px 12px;font-size:13.5px}
+  .turns p{margin:8px 0} .turns b{color:var(--seal)} .turns p.v b{color:var(--ok)}
+  .outc td{font-size:13px}
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Procurement Review Console</h1>
+      <p id="subtitle"></p>
+    </div>
+    <span id="statusPill" class="pill pending">Awaiting officer decision</span>
+  </header>
+  <div class="guard" role="note"><strong>Guardrail.</strong> This console compares and recommends. It has no connection to the ERP, e-mail or payment systems: it cannot raise a purchase order, send a vendor e-mail or release funds. Approvals recorded here are instructions to Finance, executed by people (policy P-07).</div>
+
+  <div class="grid">
+    <!-- LEFT: weights -->
+    <div class="stack">
+      <section class="card" aria-labelledby="wh">
+        <h2 id="wh">Decision weights</h2>
+        <div id="weights"></div>
+        <p class="note" id="weightSum"></p>
+        <button class="btn ghost" id="resetW" type="button">Reset to defaults</button>
+      </section>
+
+      <section class="card">
+        <h2>What the assistant may do</h2>
+        <ul style="margin:0;padding-left:18px;font-size:13.5px;color:var(--muted)">
+          <li>Read and standardise quotations</li>
+          <li>Score vendors with the formulas shown below</li>
+          <li>Check quotes against policy and draft clarification e-mails</li>
+          <li style="color:var(--bad)">Never approve a vendor, raise a PO or move money (P-07)</li>
+        </ul>
+      </section>
+    </div>
+
+    <!-- RIGHT: results -->
+    <div class="stack">
+      <section class="card" aria-live="polite">
+        <h2>Ranking <small>recalculates as you move the weights</small></h2>
+        <div class="rank" id="rank"></div>
+      </section>
+
+      <section class="card">
+        <h2>Standardised comparison <small>from three differently formatted quotes</small></h2>
+        <div style="overflow-x:auto"><table id="cmp"></table></div>
+      </section>
+
+      <section class="card">
+        <h2>Policy checks</h2>
+        <div class="checks" id="checks"></div>
+      </section>
+
+      <section class="card">
+        <h2>Assistant summary</h2>
+        <div class="ai" id="aiSummary"></div>
+        <div class="ask">
+          <input id="q" placeholder="Ask about the policy or this comparison, e.g. Can we accept a 50% deposit?" aria-label="Question">
+          <button class="btn" id="askBtn" type="button">Ask</button>
+        </div>
+        <div class="answer" id="answer"></div>
+        <p class="note" style="margin-top:8px">Answers are grounded in the policy text and the comparison above; they are guidance, not approval.</p>
+      </section>
+
+      <section class="card">
+        <h2>Simulated voice clarification call <small>disclosed AI agent · vendor lines scripted</small></h2>
+        <div class="call">
+          <div>
+            <p class="note" style="margin:0 0 8px"><strong id="callWho"></strong></p>
+            <audio controls preload="none" src="../outputs/voice/call_megabyte.mp3" style="width:100%" aria-label="Recorded simulated call"></audio>
+            <p class="note" style="margin:6px 0 10px">If the recording does not load, <button class="btn ghost" id="speakBtn" type="button" style="padding:4px 10px;font-size:12px">read it aloud in the browser</button></p>
+            <div class="turns" id="turns"></div>
+          </div>
+          <div>
+            <p class="note" style="margin:0 0 8px"><strong>Outcome logged for the officer</strong></p>
+            <table class="outc" id="callOut"></table>
+            <p class="note" id="callCommit" style="margin-top:10px"></p>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Officer decision <small>required before anything moves forward</small></h2>
+        <div class="dec">
+          <div><label for="officer">Procurement officer</label><input id="officer" placeholder="Full name"></div>
+          <div><label for="decision">Decision</label>
+            <select id="decision">
+              <option value="approve">Approve the recommended vendor</option>
+              <option value="override">Award to a different vendor</option>
+              <option value="clarify">Request clarification before deciding</option>
+              <option value="reject">Reject all quotes and re-tender</option>
+            </select></div>
+          <div id="vendorPick" style="display:none"><label for="altVendor">Vendor</label><select id="altVendor"></select></div>
+          <div class="full"><label for="just">Justification <span id="justHint">(required when not approving the recommendation)</span></label>
+            <textarea id="just" placeholder="Why this decision? This text is stored in the approval history."></textarea></div>
+          <div class="full" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+            <button class="btn" id="record" type="button">Record decision</button>
+            <span class="note" id="decMsg"></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Approval history <small>audit trail of every decision recorded in this session</small></h2>
+        <div style="overflow-x:auto"><table class="history" id="hist"></table></div>
+        <div style="margin-top:12px;display:flex;gap:10px">
+          <button class="btn ghost" id="exportBtn" type="button">Download history (JSON)</button>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<script>
+const DATA = __DATA__;
+const POLICY = __POLICY__;
+const AI_SUMMARY = __AI_SUMMARY__;
+const CALL = __CALL__;
+const CRIT = Object.keys(DATA.weights);
+const HELP = {
+  cost:"Cheapest all-in total ÷ vendor total",
+  technical_fit:"Mandatory specs met (90) or exceeded (100)",
+  delivery:"100 inside the window, −5 per day late",
+  warranty_support:"≥3 yrs = 70, + onsite 30 / depot 15 / carry-in 10",
+  commercial_compliance:"Payment terms, advance, validity, ISO 27001",
+  past_performance:"24-month history; new vendor = neutral 60"
+};
+let weights = {...DATA.weights};
+const history = [];
+const $ = id => document.getElementById(id);
+const money = n => "USD " + Math.round(n).toLocaleString("en-US");
+
+function weightedScores(){
+  const total = CRIT.reduce((s,k)=>s+weights[k],0) || 1;
+  return DATA.vendors.map(v => ({...v, w: CRIT.reduce((s,k)=>s+v.scores[k]*weights[k]/total,0)}));
+}
+function ranking(){
+  const eligible = weightedScores().filter(v=>v.policy_status!=="fail").sort((a,b)=>b.w-a.w);
+  const failed = weightedScores().filter(v=>v.policy_status==="fail");
+  return {eligible, failed, top: eligible[0]};
+}
+
+function renderWeights(){
+  $("weights").innerHTML = CRIT.map(k=>`
+    <div class="w">
+      <label for="w_${k}"><span>${DATA.criteria_labels[k]}</span><b id="wv_${k}">${weights[k]}%</b></label>
+      <input type="range" id="w_${k}" min="0" max="60" value="${weights[k]}" aria-label="${DATA.criteria_labels[k]}">
+      <div class="why">${HELP[k]}</div>
+    </div>`).join("");
+  CRIT.forEach(k=>$("w_"+k).addEventListener("input",e=>{weights[k]=+e.target.value;$("wv_"+k).textContent=weights[k]+"%";renderAll(false);}));
+}
+function renderRank(){
+  const {eligible, failed, top} = ranking();
+  const max = Math.max(...eligible.map(v=>v.w), 1);
+  const card = (v,i,excluded)=>`
+    <div class="vendor ${!excluded && i===0 ? "top":""} ${excluded?"excluded":""}">
+      <div class="n">${excluded?"—":i+1}</div>
+      <div><div class="name">${v.vendor_name} ${!excluded && i===0 ? '<span class="pill pass" style="margin-left:6px">Recommended</span>':""}
+        <span class="pill ${v.policy_status}" style="margin-left:6px">${v.policy_status==="pass"?"Policy clear":v.policy_status==="flag"?"Needs exception":"Blocked"}</span></div>
+        <div class="meta">${money(v.total_cost_usd)} · ${v.delivery_days_calendar} days · ${v.warranty} · ${v.payment}</div></div>
+      <div class="score">${v.w.toFixed(1)}<small>weighted score</small></div>
+      <div class="bar"><i style="width:${(v.w/max*100).toFixed(1)}%"></i></div>
+    </div>`;
+  $("rank").innerHTML = eligible.map((v,i)=>card(v,i,false)).join("") + failed.map(v=>card(v,0,true)).join("");
+  const total = CRIT.reduce((s,k)=>s+weights[k],0);
+  $("weightSum").textContent = total===100 ? "Weights sum to 100%." : `Weights sum to ${total}% — scores are normalised automatically.`;
+}
+function renderTable(){
+  const vs = DATA.vendors;
+  const best = f => Math[f.dir](...vs.map(f.get));
+  const rows = [
+    {l:"All-in total", get:v=>v.total_cost_usd, fmt:v=>money(v.total_cost_usd), dir:"min"},
+    {l:"Per unit (all-in)", get:v=>v.unit_cost_usd_all_in, fmt:v=>"USD "+v.unit_cost_usd_all_in.toFixed(2), dir:"min"},
+    {l:"Delivery (calendar days)", get:v=>v.delivery_days_calendar, fmt:v=>v.delivery_days_calendar+" d", dir:"min"},
+    {l:"Warranty", fmt:v=>v.warranty},
+    {l:"Payment terms", fmt:v=>v.payment},
+    {l:"ISO 27001", fmt:v=>v.iso27001},
+    {l:"Specs vs. mandatory", fmt:v=>Object.values(v.spec_checks).every(Boolean)?"All met":"Gap"},
+    {l:"Extras", fmt:v=>v.extras.join("; ")||"—"},
+    {l:"Past orders (24 mo)", fmt:v=>v.performance.history==="yes"?v.performance.orders_completed:"none — new vendor"},
+    {l:"On-time delivery", get:v=>v.performance.on_time_delivery_pct||0, fmt:v=>v.performance.history==="yes"?v.performance.on_time_delivery_pct+"%":"—", dir:"max"},
+    {l:"Defect rate", fmt:v=>v.performance.history==="yes"?v.performance.defect_rate_pct+"%":"—"},
+    {l:"Invoice accuracy", fmt:v=>v.performance.history==="yes"?v.performance.invoice_accuracy_pct+"%":"—"},
+    ...CRIT.map(k=>({l:"Score · "+DATA.criteria_labels[k], get:v=>v.scores[k], fmt:v=>v.scores[k].toFixed(0), dir:"max"}))
+  ];
+  $("cmp").innerHTML = `<tr><th></th>${vs.map(v=>`<th class="num">${v.vendor_name}</th>`).join("")}</tr>` +
+    rows.map(r=>`<tr><td>${r.l}</td>${vs.map(v=>`<td class="num ${r.get && r.get(v)===best(r)?"best":""}">${r.fmt(v)}</td>`).join("")}</tr>`).join("");
+}
+function renderChecks(){
+  $("checks").innerHTML = DATA.vendors.map(v=>`
+    <div class="check"><h3>${v.vendor_name}<span class="pill ${v.policy_status}">${v.policy_status.toUpperCase()}</span></h3>
+      <ul>${v.policy_checks.map(c=>`<li class="${c.status}">${c.rule}<br><span>${c.detail}</span></li>`).join("")}</ul></div>`).join("");
+}
+function renderSummary(){
+  $("aiSummary").innerHTML = mdLite(AI_SUMMARY);
+}
+function mdLite(md){
+  return md.replace(/^# .*$/m,"").replace(/^---[\s\S]*$/m,"")
+    .split(/\n{2,}/).map(b=>{
+      b=b.trim(); if(!b) return "";
+      if(b.startsWith("- ")) return "<ul>"+b.split("\n").map(l=>"<li>"+inline(l.replace(/^- /,""))+"</li>").join("")+"</ul>";
+      return "<p>"+inline(b)+"</p>";
+    }).join("");
+}
+function inline(s){return s.replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>").replace(/_(.+?)_/g,"<em>$1</em>");}
+function renderDecisionForm(){
+  const {top, eligible} = ranking();
+  $("altVendor").innerHTML = DATA.vendors.map(v=>`<option ${v.vendor_name===top?.vendor_name?"disabled":""}>${v.vendor_name}</option>`).join("");
+  $("decision").onchange = ()=>{ $("vendorPick").style.display = $("decision").value==="override"?"block":"none"; };
+}
+function renderCall(){
+  if(!CALL){ return; }
+  $("callWho").textContent = `${CALL.vendor} · quote ${CALL.quote_ref} · ${CALL.call_date} · flags: ${CALL.flags_discussed.join(", ")}`;
+  $("turns").innerHTML = CALL.turns.map(t=>`<p class="${t.speaker==="Vendor"?"v":""}"><b>${t.speaker==="Agent"?"AI agent":"Vendor"}:</b> ${t.text}</p>`).join("");
+  $("callOut").innerHTML = `<tr><th>Topic</th><th>Vendor position</th><th>Policy effect</th></tr>` + CALL.outcomes.map(o=>`<tr><td>${o.topic}</td><td>${o.vendor_position}</td><td>${o.policy_effect}</td></tr>`).join("");
+  $("callCommit").innerHTML = `<strong>Commitments made by the agent:</strong> ${CALL.commitments_made_by_agent}<br><strong>Next action:</strong> ${CALL.next_action_for_human}`;
+  $("speakBtn").onclick = ()=>{
+    if(!window.speechSynthesis){ alert("Speech synthesis is not available in this browser."); return; }
+    speechSynthesis.cancel();
+    const voices = speechSynthesis.getVoices();
+    CALL.turns.forEach(t=>{ const u=new SpeechSynthesisUtterance(t.text); u.pitch = t.speaker==="Agent"?0.9:1.2; u.rate=1.02;
+      if(voices.length>1) u.voice = voices[t.speaker==="Agent"?0:1]; speechSynthesis.speak(u); });
+  };
+}
+function renderHistory(){
+  if(!history.length){ $("hist").innerHTML = `<tr><td class="empty">No decision recorded yet. The recommendation stays a proposal until an officer records one.</td></tr>`; return; }
+  $("hist").innerHTML = `<tr><th>Time</th><th>Officer</th><th>Decision</th><th>Vendor</th><th>Weights</th><th>Justification</th></tr>` +
+    history.map(h=>`<tr><td>${h.time}</td><td>${h.officer}</td><td>${h.decision}</td><td>${h.vendor}</td><td>${CRIT.map(k=>h.weights[k]).join("/")}</td><td>${h.justification||"—"}</td></tr>`).join("");
+}
+function renderAll(full=true){
+  renderRank(); renderDecisionForm();
+  if(full){ renderTable(); renderChecks(); renderSummary(); renderCall(); renderHistory(); }
+}
+
+$("record").onclick = ()=>{
+  const officer=$("officer").value.trim(), dec=$("decision").value, just=$("just").value.trim();
+  const {top}=ranking();
+  const labels={approve:"Approved recommendation",override:"Awarded to different vendor",clarify:"Clarification requested",reject:"Rejected all quotes"};
+  if(!officer){ msg("Enter the officer's name — decisions must be attributable (P-07).",true); return; }
+  if(dec!=="approve" && !just){ msg("A justification is required when you do not accept the recommendation.",true); return; }
+  const vendor = dec==="approve"?top.vendor_name : dec==="override"?$("altVendor").value : dec==="clarify"?"(pending)":"(none)";
+  history.unshift({time:new Date().toISOString().replace("T"," ").slice(0,16), officer, decision:labels[dec], vendor, weights:{...weights}, justification:just,
+                   snapshot: ranking().eligible.map(v=>({vendor:v.vendor_name, score:+v.w.toFixed(2)}))});
+  renderHistory();
+  $("statusPill").className="pill done"; $("statusPill").textContent = labels[dec]+" — "+officer;
+  msg(`Recorded. ${dec==="approve"||dec==="override"?"Finance can now raise the PO for "+vendor+" — the assistant does not do this.":"Nothing is ordered."}`);
+  $("just").value="";
+};
+function msg(t,err){ $("decMsg").textContent=t; $("decMsg").className="note"+(err?" err":""); }
+$("resetW").onclick=()=>{ weights={...DATA.weights}; renderWeights(); renderAll(false); };
+$("exportBtn").onclick=()=>{
+  const blob=new Blob([JSON.stringify({request_id:DATA.request_id, exported:new Date().toISOString(), history},null,2)],{type:"application/json"});
+  const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=`approval_history_${DATA.request_id}.json`; a.click();
+};
+
+// ---- Policy Q&A (generative AI). Works inside claude.ai artifacts without a key;
+//      elsewhere route through your own backend that holds the API key.
+$("askBtn").onclick = async ()=>{
+  const q=$("q").value.trim(); if(!q) return;
+  $("answer").textContent="Thinking…"; $("askBtn").disabled=true;
+  const {eligible,top}=ranking();
+  const ctx = {recommendation: top?.vendor_name, weights, vendors: eligible.map(v=>({name:v.vendor_name, score:+v.w.toFixed(1), policy_status:v.policy_status,
+               flags: v.policy_checks.filter(c=>c.status!=="pass").map(c=>c.detail)}))};
+  try{
+    const r = await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({model:"claude-sonnet-4-6",max_tokens:600,
+        system:"You are a procurement policy assistant. Answer only from the POLICY and CONTEXT given. Cite rule ids like P-03. You cannot approve, order or pay; say so if asked. Be concise.",
+        messages:[{role:"user",content:`POLICY:\n${POLICY}\n\nCONTEXT:\n${JSON.stringify(ctx)}\n\nQUESTION: ${q}`}]})});
+    const d = await r.json();
+    $("answer").textContent = (d.content||[]).filter(b=>b.type==="text").map(b=>b.text).join("\n") || "No answer returned.";
+  }catch(e){
+    $("answer").textContent="The assistant could not be reached from this environment. Run the dashboard inside claude.ai, or call src/03_ai_assistant.py --ask \"your question\" with an API key.";
+  }
+  $("askBtn").disabled=false;
+};
+
+$("subtitle").textContent = `${DATA.purchasing_category} · ${DATA.quantity} units · budget ${money(DATA.budget_cap_usd)} · request ${DATA.request_id}`;
+renderWeights(); renderAll(true);
+</script>
+</body>
+</html>

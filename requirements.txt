@@ -1,0 +1,3 @@
+pdfplumber>=0.11
+reportlab>=4.0
+anthropic>=0.40      # only needed for --mode llm and 03_ai_assistant.py online mode
