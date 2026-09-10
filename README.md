@@ -90,6 +90,3 @@ Then open `app/dashboard.html` in a browser (no server needed). The in-dashboard
 - **Audit trail** lives in the browser session and is exported as JSON; production needs a database with immutable logs and integration with the ERP / P2P system so the PO is raised from the approved record.
 - **Bias / fairness.** Weights and formulas are explicit and editable, which is the main safeguard; the officer's justification for overriding the ranking is recorded and reviewable.
 - **Before go-live:** pilot on 10 historic purchases and compare tool output against the decisions actually taken; sign-off from Procurement, Finance and the CISO; a 30-day period of parallel running.
-
-## AI tools and applications used
-Claude (Anthropic) via API for extraction, explanation, e-mail drafting, negotiation prep and policy Q&A; Claude Code / claude.ai used to build the solution; Python (pdfplumber, reportlab), HTML/JavaScript dashboard.
